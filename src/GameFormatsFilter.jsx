@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import $ from 'jquery'
 
+import { addGameFormat } from './actions'
+
 export class GameFormatsFilter extends Component {
   handleCheckboxChange(event) {
     let $checkbox = $(event.target)
@@ -36,7 +38,15 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  
+  return {
+    onChangeCheckbox: (gameFormat) => {
+      if(gameFormat.value){
+        dispatch(addGameFormat(gameFormat))
+      } else {
+        dispatch()
+      }
+    }
+  }
 }
 
 export const GameFormatsFilterContainer = connect(mapStateToProps)(GameFormatsFilter)
