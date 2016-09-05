@@ -37,7 +37,7 @@ export default class CardsList extends Component {
         }).then(response => {
             this.setState({cards: response.data.cards})
         }).catch((error) => {
-            // TODO catch error
+            //TODO catch error
         })
 
         this.setState({page: this.state.page + 1})

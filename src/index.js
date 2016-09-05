@@ -6,7 +6,7 @@ import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 import cardSearchApp from './reducers.js'
 
-const store = createStore(cardSearchApp)
+const store = createStore(cardSearchApp, window.devToolsExtension && window.devToolsExtension())
 
 ReactDOM.render(
     <Provider store={store}>

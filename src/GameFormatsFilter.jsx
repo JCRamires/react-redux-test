@@ -2,16 +2,26 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import $ from 'jquery'
 
-import {addGameFormat} from './actions'
+import {addGameFormat, removeGameFormat} from './actions'
 
 export class GameFormatsFilter extends Component {
-    handleCheckboxChange(event) {
-        let $checkbox = $(event.target)
+    constructor(props) {
+        super(props)
+
+        this.handleCheckboxChange = (event) => {this.dispatchGameFormat(event)}
+    }
+
+    dispatchGameFormat(event) {
+        //TODO não usar jquery
+        const $checkbox = $(event.target)
+        let dispatchData = {key:$checkbox.attr('name'), value: false}
         if ($checkbox.is(':checked')) {
-            console.log('check')
+            dispatchData.value = true
         } else {
-            console.log('uncheck')
+            dispatchData.value = false
         }
+
+        this.props.onChangeCheckbox(dispatchData)
     }
 
     render() {
@@ -42,13 +52,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onChangeCheckbox: (gameFormat) => {
-            if (gameFormat.value) {
-                dispatch(addGameFormat(gameFormat))
+            if (gameFormat.value){
+                dispatch(addGameFormat(gameFormat.key))
             } else {
-                dispatch()
+                dispatch(removeGameFormat(gameFormat.key))
             }
         }
     }
 }
 
-export const GameFormatsFilterContainer = connect(mapStateToProps)(GameFormatsFilter)
+export const GameFormatsFilterContainer = connect(mapStateToProps, mapDispatchToProps)(GameFormatsFilter)
